@@ -34,13 +34,12 @@ class BasicAuth(Auth):
         """
         if type(base64_authorization_header) == str:
             try:
-                res = base64.b64decode(
-                    base64_authorization_header,
-                    validate=True,
-                )
-                return res.decode('utf-8')
-            except (binascii.Error, UnicodeDecodeError):
+                return base64.b64decode(
+                    base64_authorization_header.encode('utf-8'),
+                ).decode('utf-8')   
+            except binascii.Error:
                 return None
+        return None
 
     def extract_user_credentials(
             self,
@@ -50,13 +49,13 @@ class BasicAuth(Auth):
         header that uses the Basic authentication flow.
         """
         if type(decoded_base64_authorization_header) == str:
-            pattern = r'(?P<user>[^:]+):(?P<password>.+)'
+            pattern = r'(?P<useremail>[^:]+):(?P<password>.+)'
             field_match = re.fullmatch(
                 pattern,
                 decoded_base64_authorization_header.strip(),
             )
             if field_match is not None:
-                user = field_match.group('user')
+                user = field_match.group('useremail')
                 password = field_match.group('password')
                 return user, password
         return None, None
