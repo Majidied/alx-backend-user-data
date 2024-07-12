@@ -28,26 +28,31 @@ Welcome to the ALX Backend User Data repository. This project is part of the ALX
 To get a local copy up and running, follow these simple steps:
 
 1. Clone the repository:
+
    ```sh
    git clone https://github.com/majidied/alx-backend-user-data.git
    ```
 
 2. Navigate to the project directory:
+
    ```sh
    cd alx-backend-user-data
    ```
 
 3. Install dependencies:
+
    ```sh
    pip install -r requirements.txt
    ```
 
 4. Set up the database:
+
    ```sh
    python manage.py migrate
    ```
 
 5. Run the application:
+
    ```sh
    python manage.py runserver
    ```
@@ -68,6 +73,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Mohammed MAJIDI - [@mTwitter](https://twitter.com/majidied) - majidimajidi2003@gmail.com
+Mohammed MAJIDI - [@mTwitter](https://twitter.com/majidied) - <majidimajidi2003@gmail.com>
 
 Project Link: [https://github.com/majidied/alx-backend-user-data](https://github.com/majidied/alx-backend-user-data)
