@@ -76,6 +76,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Your Name - [@Twitter](https://twitter.com/majidied) - <majidimajidi2003@gmail.com>
+Mohammed MAJIDI - [@Twitter](https://twitter.com/majidied) - <majidimajidi2003@gmail.com>
 
 Project Link: [https://github.com/majidied/alx-backend-user-data/tree/main/0x01-Basic_authentication](https://github.com/majidied/alx-backend-user-data/tree/main/0x01-Basic_authentication)
