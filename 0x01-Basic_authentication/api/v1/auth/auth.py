@@ -1,51 +1,37 @@
-from typing import List, TypeVar
+#!/usr/bin/env python3
+"""Authentication module.
+"""
 from flask import request
+from typing import List, TypeVar
+import fnmatch
 
 
 class Auth:
-    """Class representing the authentication functionality."""
-
+    """Authentication class.
+    """
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """Method that should implement the logic for checking if a route
-        requires authentication.
-
-        Args:
-            path (str): The path of the route.
-            excluded_paths (List[str]): List of paths that are excluded from authentication.
-
-        Returns:
-            bool: True if authentication is required, False otherwise.
+        """ Method to check if auth is required.
         """
-        if path is None or excluded_paths is None or excluded_paths == []:
+        if path is None:
             return True
-        if path[-1] != '/':
-            path += '/'
-        if path in excluded_paths:
-            return False
+
+        if excluded_paths is None or not excluded_paths:
+            return True
+
+        for excluded_path in excluded_paths:
+            if fnmatch.fnmatch(path, excluded_path):
+                return False
+
         return True
-    
+
     def authorization_header(self, request=None) -> str:
-        """Method that should implement the logic for checking if a request
-        is authorized.
-
-        Args:
-            request (Optional): The request object.
-
-        Returns:
-            str: The authorization header value if present, None otherwise.
+        """ Method to get authorization header.
         """
-        if request is None or 'Authorization' not in request.headers:
-            return None
-        return request.headers['Authorization']
-    
+        if request is not None:
+            return request.headers.get('Authorization', None)
+        return None
+
     def current_user(self, request=None) -> TypeVar('User'):
-        """Method that should implement the logic for checking if a request
-        is authorized.
-
-        Args:
-            request (Optional): The request object.
-
-        Returns:
-            TypeVar('User'): The current user if authorized, None otherwise.
+        """ Method to get user from request.
         """
         return None
