@@ -14,39 +14,39 @@ app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 auth = None
-auth_type = getenv('AUTH_TYPE', 'auth')
-if auth_type == 'auth':
+auth_type = getenv("AUTH_TYPE", "auth")
+if auth_type == "auth":
     auth = Auth()
-elif auth_type == 'basic_auth':
+elif auth_type == "basic_auth":
     auth = BasicAuth()
+
 
 @app.errorhandler(401)
 def unauthorized(error) -> str:
-    """Unauthorized handler.
-    """
+    """Unauthorized handler."""
     return jsonify({"error": "Unauthorized"}), 401
+
 
 @app.errorhandler(403)
 def forbidden(error) -> str:
-    """Forbidden handler.
-    """
+    """Forbidden handler."""
     return jsonify({"error": "Forbidden"}), 403
+
 
 @app.errorhandler(404)
 def not_found(error) -> str:
-    """ Not found handler
-    """
+    """Not found handler"""
     return jsonify({"error": "Not found"}), 404
+
 
 @app.before_request
 def authenticate_user():
-    """Authenticates a user before processing a request.
-    """
+    """Authenticates a user before processing a request."""
     if auth:
         excluded_paths = [
-            '/api/v1/status/',
-            '/api/v1/unauthorized/',
-            '/api/v1/forbidden/',
+            "/api/v1/status/",
+            "/api/v1/unauthorized/",
+            "/api/v1/forbidden/",
         ]
         if auth.require_auth(request.path, excluded_paths):
             auth_header = auth.authorization_header(request)
@@ -55,6 +55,7 @@ def authenticate_user():
                 abort(401)
             if user is None:
                 abort(403)
+
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
