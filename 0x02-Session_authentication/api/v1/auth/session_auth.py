@@ -7,19 +7,19 @@ from uuid import uuid4
 
 class SessionAuth(Auth):
     """Session Authentication Class
-    
+
     This class provides session-based authentication functionality.
     It allows creating and managing user sessions.
     """
 
     user_id_by_session_id = {}
-    
+
     def create_session(self, user_id: str = None) -> str:
         """Create a new session for the given user ID.
-        
+
         Args:
             user_id (str): The ID of the user.
-        
+
         Returns:
             str: The session ID generated for the user.
         """
