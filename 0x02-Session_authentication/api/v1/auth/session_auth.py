@@ -5,7 +5,7 @@ from models.user import User
 from uuid import uuid4
 
 
-
 class SessionAuth(Auth):
-    """ Session Authentication Class """
+    """Session Authentication Class"""
+
     pass
