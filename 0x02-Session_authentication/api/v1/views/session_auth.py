@@ -21,6 +21,7 @@ def login():
         A JSON response containing the user object.
 
     Raises:
+        400: If email or password is missing.
         404: If no user is found for the provided email.
         401: If the password is incorrect.
 
@@ -46,3 +47,24 @@ def login():
     response = jsonify(user[0].to_json())
     response.set_cookie(session_name, session_id)
     return response
+
+@app_views.route("/auth_session/logout", methods=["DELETE"], strict_slashes=False)
+def logout():
+    """Handle user logout using session authentication.
+
+    This route allows users to log out by destroying their session
+    If the session cookie is missing, an error message is returned
+    If the session cookie is invalid, an error message is returned
+    If the logout is successful, an empty JSON response is returned
+
+    Returns:
+        An empty JSON response.
+
+    Raises:
+        403: If the session cookie is missing or invalid.
+
+    """
+    from api.v1.app import auth
+    if not auth.destroy_session(request):
+        abort(404)
+    return jsonify({}), 200
