@@ -35,7 +35,7 @@ class Auth:
         """Method to get user from request."""
         return None
 
-    def session_cookie(self, request=None):
+    def session_cookie(self, request=None) -> str:
         """Method to get session cookie."""
         if request is not None:
             session_name = os.getenv('SESSION_NAME', '_my_session_id')
