@@ -10,11 +10,12 @@ from os import getenv
 def login():
     """Handle user login using session authentication.
 
-    This route allows users to log in by providing their email and password.
-    If the email or password is missing, an error message is returned.
-    If the email is not associated with any user, an error message is returned.
+    This route allows users to log in by providing their email and password
+    If the email or password is missing, an error message is returned
+    If the email is not associated with any user, an error message is returned
     If the password is incorrect, an error message is returned.
-    If the login is successful, a session is created and a user object JSON is returned.
+    If the login is successful, a session is created and a user object
+    JSON is returned
 
     Returns:
         A JSON response containing the user object.
