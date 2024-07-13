@@ -12,7 +12,7 @@ class SessionAuth(Auth):
     It allows creating and managing user sessions.
     """
 
-    user_id_by_session_id:dict = {}
+    user_id_by_session_id: dict = {}
 
     def create_session(self, user_id: str = None) -> str:
         """Create a new session for the given user ID.
