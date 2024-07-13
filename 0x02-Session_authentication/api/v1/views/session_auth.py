@@ -8,9 +8,21 @@ from os import getenv
 
 @app_views.route("/auth_session/login", methods=["POST"], strict_slashes=False)
 def login():
-    """POST /auth_session/login
-    Return:
-      - User object JSON represented
+    """Handle user login using session authentication.
+
+    This route allows users to log in by providing their email and password.
+    If the email or password is missing, an error message is returned.
+    If the email is not associated with any user, an error message is returned.
+    If the password is incorrect, an error message is returned.
+    If the login is successful, a session is created and a user object JSON is returned.
+
+    Returns:
+        A JSON response containing the user object.
+
+    Raises:
+        404: If no user is found for the provided email.
+        401: If the password is incorrect.
+
     """
     email = request.form.get("email")
     if not email:
