@@ -51,7 +51,7 @@ class DB:
     def update_user(self, user_id: int, **kwargs) -> None:
         """Update a user in the database"""
         try:
-            user = self._session.query(User).filter_by(id=user_id).first()
+            user = self.find_user_by(id=user_id)
             for key, value in kwargs.items():
                 setattr(user, key, value)
             self._session.commit()
