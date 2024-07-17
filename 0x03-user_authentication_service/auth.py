@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """ Auth class to interact with the authentication database. """
+import uuid
 from bcrypt import hashpw, gensalt
 import bcrypt
 from db import DB
@@ -60,3 +61,7 @@ class Auth:
                 )
         except NoResultFound:
             return False
+
+        def _generate_uuid() -> str:
+            """Generate a UUID."""
+            return str(uuid.uuid4())
