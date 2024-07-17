@@ -12,6 +12,7 @@ def _hash_password(password: str) -> str:
     """Hash a password"""
     return hashpw(password.encode("utf-8"), gensalt())
 
+
 def _generate_uuid() -> str:
     """Generate a UUID."""
     return str(uuid4())
@@ -62,4 +63,4 @@ class Auth:
                 )
         except NoResultFound:
             return False
-
+        return False
