@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """ Main file """
 from auth import Auth
-from flask import Flask, Response, jsonify, redirect
-from flask import  request, abort, make_response
+from flask import Flask, Response, jsonify, redirect, request, abort, make_response
+
 
 app = Flask(__name__)
 AUTH = Auth()
