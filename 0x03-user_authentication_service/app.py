@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """ Main file """
 from auth import Auth
-from flask import Flask, Response, jsonify, redirect, request, abort, make_response
-
+from flask import Flask, Response, jsonify, redirect
+from flask import  request, abort, make_response
 
 app = Flask(__name__)
 AUTH = Auth()
@@ -48,7 +48,8 @@ def login() -> Response:
 
     if AUTH.valid_login(email, password):
         session_id = AUTH.create_session(email)
-        response = make_response(jsonify({"email": email, "message": "logged in"}))
+        response = make_response(
+            jsonify({"email": email, "message": "logged in"}))
         response.set_cookie("session_id", session_id)
         return response
     else:
@@ -69,6 +70,21 @@ def logout() -> str:
         abort(403)
     AUTH.destroy_session(user.id)
     return redirect("/")
+
+
+@app.route("/profile", methods=["GET"], strict_slashes=False)
+def profile() -> str:
+    """User profile
+
+    Returns:
+        str: If the user exist, respond with a 200 HTTP status and
+        the following JSON payload:
+    """
+    session_id = request.cookies.get("session_id")
+    user = AUTH.get_user_from_session_id(session_id)
+    if user is None:
+        abort(403)
+    return jsonify({"email": user.email})
 
 
 if __name__ == "__main__":
