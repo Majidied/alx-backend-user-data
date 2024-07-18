@@ -33,7 +33,7 @@ def users() -> str:
         return jsonify({"message": "email already registered"})
 
 
-@app.route("/sessions", methods=["POST"], strict_slashes=True)
+@app.route("/sessions", methods=["POST"], strict_slashes=False)
 def login() -> Response:
     """POST /sessions
 
