@@ -134,7 +134,8 @@ class Auth:
             password (str): The new password to set for the user.
 
         Raises:
-            ValueError: If the reset token is invalid or does not correspond to any user.
+            ValueError: If the reset token is invalid or does not
+            correspond to any user.
 
         Returns:
             None
@@ -142,5 +143,8 @@ class Auth:
         user = self._db.find_user_by(reset_token=reset_token)
         if user is None:
             raise ValueError("Invalid reset token")
-        self._db.update_user(user.id, hashed_password=_hash_password(password))
+        self._db.update_user(
+            user.id,
+            hashed_password=_hash_password(password),
+            reset_token=None)
         return None
