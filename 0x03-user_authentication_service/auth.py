@@ -144,6 +144,7 @@ class Auth:
         if user is None:
             raise ValueError("Invalid reset token")
         self._db.update_user(
-            user.id, hashed_password=_hash_password(password), reset_token=None
-        )
+            user.id,
+            hashed_password=_hash_password(password),
+            reset_token=None)
         return None
