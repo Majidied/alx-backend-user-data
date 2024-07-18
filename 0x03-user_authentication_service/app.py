@@ -34,18 +34,21 @@ def users() -> str:
 
 
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
-def login() -> str:
+def login():
     """POST /sessions
-    Return:
-        - The account login payload.
+
+    Returns:
+        str: JSON payload
     """
-    email, password = request.form.get("email"), request.form.get("password")
-    if not AUTH.valid_login(email, password):
+    email = request.form.get("email")
+    password = request.form.get("password")
+    if AUTH.valid_login(email, password):
+        session_id = AUTH.create_session(email)
+        response = make_response(jsonify({"email": email, "message": "logged in"}))
+        response.set_cookie("session_id", session_id)
+        return response
+    else:
         abort(401)
-    session_id = AUTH.create_session(email)
-    response = jsonify({"email": email, "message": "logged in"})
-    response.set_cookie("session_id", session_id)
-    return response
 
 
 if __name__ == "__main__":
