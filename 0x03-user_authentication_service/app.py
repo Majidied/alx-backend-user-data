@@ -56,12 +56,12 @@ def login() -> Response:
 
 
 @app.route("/sessions", methods=["DELETE"], strict_slashes=False)
-def logout() -> Response:
+def logout():
     """DELETE /sessions
 
     Returns:
-        Response: JSON payload edirect the user to GET /. If the user does
-        not exist, respond with a 403 HTTP status.
+        Response: Redirect the user to GET /. If the user does not exist,
+        respond with a 403 HTTP status.
     """
     session_id = request.form.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
