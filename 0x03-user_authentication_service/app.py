@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ Main file """
 from auth import Auth
-from flask import Flask, Response, jsonify, request, abort, make_response
+from flask import Flask, Response, jsonify, redirect, request, abort, make_response
 
 
 app = Flask(__name__)
@@ -53,6 +53,23 @@ def login() -> Response:
         return response
     else:
         abort(401)
+
+
+@app.route("/sessions", methods=["DELETE"], strict_slashes=False)
+def logout() -> Response:
+    """DELETE /sessions
+
+    Returns:
+        Response: JSON payload edirect the user to GET /. If the user does
+        not exist, respond with a 403 HTTP status.
+    """
+    session_id = request.form.get("session_id")
+    user = AUTH.get_user_from_session_id(session_id)
+    if user:
+        AUTH.destroy_session(user.id)
+        return redirect('/')
+    else:
+        abort(403)
 
 
 if __name__ == "__main__":
