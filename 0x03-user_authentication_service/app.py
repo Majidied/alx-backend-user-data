@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ Main file """
 from auth import Auth
-from flask import Flask, jsonify, request, abort, make_response
+from flask import Flask, Response, jsonify, request, abort, make_response
 
 
 app = Flask(__name__)
@@ -34,7 +34,7 @@ def users() -> str:
 
 
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
-def login():
+def login() -> 'Response':
     """POST /sessions
 
     Returns:
