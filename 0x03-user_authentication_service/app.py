@@ -34,14 +34,18 @@ def users() -> str:
 
 
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
-def login() -> 'Response':
+def login() -> "Response":
     """POST /sessions
 
     Returns:
-        str: JSON payload
+        Response: JSON payload
     """
     email = request.form.get("email")
     password = request.form.get("password")
+
+    if not email or not password:
+        return jsonify({"error": "Email and password are required"}), 400
+
     if AUTH.valid_login(email, password):
         session_id = AUTH.create_session(email)
         response = make_response(jsonify({"email": email, "message": "logged in"}))
