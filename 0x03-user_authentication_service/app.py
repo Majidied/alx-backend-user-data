@@ -34,7 +34,7 @@ def users() -> str:
 
 
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
-def login() -> "Response":
+def login() -> Response:
     """POST /sessions
 
     Returns:
