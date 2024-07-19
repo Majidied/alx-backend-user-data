@@ -106,17 +106,24 @@ def get_reset_password_token() -> str:
 
 @app.route("/reset_password", methods=["PUT"], strict_slashes=False)
 def update_password() -> str:
-    """Update user password
+    """
+    Update user password.
 
-    This endpoint updates the user's password. It requires a valid reset token
-    and a new password. If the reset token is valid and
+    This endpoint updates the user's password. It requires
+    a valid reset token and a new password. If the reset token is valid and
     the password is successfully updated, it responds with a 200 HTTP status.
     If the reset token is invalid, it responds with a 403 status code.
 
+    Parameters:
+    - email (str): The email address of the user requesting the
+    password update.
+    - reset_token (str): A valid reset token for the user.
+    - new_password (str): The new password to be set for the user.
+
     Returns:
-        str: JSON payload indicating the result of the operation. On success,
-        it may return a message indicating the password has been updated.
-        On failure, the response will indicate the reason for the failure.
+    str: JSON payload indicating the result of the operation. On success,
+         it may return a message indicating the password has been updated.
+         On failure, the response will indicate the reason for the failure.
     """
     email = request.form.get("email")
     reset_token = request.form.get("reset_token")
