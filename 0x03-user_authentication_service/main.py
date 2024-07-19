@@ -3,35 +3,32 @@
 """
 import requests
 
+
 EMAIL = "guillaume@holberton.io"
 PASSWD = "b4l0u"
 NEW_PASSWD = "t4rt1fl3tt3"
 BASE_URL = "http://0.0.0.0:5000"
 
-def delete_user(email: str) -> None:
-    """Deletes a user if exists. This is for cleanup before tests."""
-    url = "{}/users".format(BASE_URL)
-    res = requests.delete(url, data={'email': email})
 
 def register_user(email: str, password: str) -> None:
-    """Tests registering a user."""
-    delete_user(email)  # Cleanup step before test
+    """Tests registering a user.
+    """
     url = "{}/users".format(BASE_URL)
     body = {
         'email': email,
         'password': password,
     }
     res = requests.post(url, data=body)
-    print("Response JSON (register_user):", res.json())  # Debugging
     assert res.status_code == 200
     assert res.json() == {"email": email, "message": "user created"}
     res = requests.post(url, data=body)
-    print("Response JSON (duplicate register_user):", res.json())  # Debugging
     assert res.status_code == 400
     assert res.json() == {"message": "email already registered"}
 
+
 def log_in_wrong_password(email: str, password: str) -> None:
-    """Tests logging in with a wrong password."""
+    """Tests logging in with a wrong password.
+    """
     url = "{}/sessions".format(BASE_URL)
     body = {
         'email': email,
@@ -40,27 +37,32 @@ def log_in_wrong_password(email: str, password: str) -> None:
     res = requests.post(url, data=body)
     assert res.status_code == 401
 
+
 def log_in(email: str, password: str) -> str:
-    """Tests logging in."""
+    """Tests logging in.
+    """
     url = "{}/sessions".format(BASE_URL)
     body = {
         'email': email,
         'password': password,
     }
     res = requests.post(url, data=body)
-    print("Response JSON (log_in):", res.json())  # Debugging
     assert res.status_code == 200
     assert res.json() == {"email": email, "message": "logged in"}
     return res.cookies.get('session_id')
 
+
 def profile_unlogged() -> None:
-    """Tests retrieving profile information whilst logged out."""
+    """Tests retrieving profile information whilst logged out.
+    """
     url = "{}/profile".format(BASE_URL)
     res = requests.get(url)
     assert res.status_code == 403
 
+
 def profile_logged(session_id: str) -> None:
-    """Tests retrieving profile information whilst logged in."""
+    """Tests retrieving profile information whilst logged in.
+    """
     url = "{}/profile".format(BASE_URL)
     req_cookies = {
         'session_id': session_id,
@@ -69,8 +71,10 @@ def profile_logged(session_id: str) -> None:
     assert res.status_code == 200
     assert "email" in res.json()
 
+
 def log_out(session_id: str) -> None:
-    """Tests logging out of a session."""
+    """Tests logging out of a session.
+    """
     url = "{}/sessions".format(BASE_URL)
     req_cookies = {
         'session_id': session_id,
@@ -79,20 +83,23 @@ def log_out(session_id: str) -> None:
     assert res.status_code == 200
     assert res.json() == {"message": "Bienvenue"}
 
+
 def reset_password_token(email: str) -> str:
-    """Tests requesting a password reset."""
+    """Tests requesting a password reset.
+    """
     url = "{}/reset_password".format(BASE_URL)
     body = {'email': email}
     res = requests.post(url, data=body)
-    print("Response JSON (reset_password_token):", res.json())  # Debugging
     assert res.status_code == 200
     assert "email" in res.json()
     assert res.json()["email"] == email
     assert "reset_token" in res.json()
     return res.json().get('reset_token')
 
+
 def update_password(email: str, reset_token: str, new_password: str) -> None:
-    """Tests updating a user's password."""
+    """Tests updating a user's password.
+    """
     url = "{}/reset_password".format(BASE_URL)
     body = {
         'email': email,
@@ -100,9 +107,9 @@ def update_password(email: str, reset_token: str, new_password: str) -> None:
         'new_password': new_password,
     }
     res = requests.put(url, data=body)
-    print("Response JSON (update_password):", res.json())  # Debugging
     assert res.status_code == 200
     assert res.json() == {"email": email, "message": "Password updated"}
+
 
 if __name__ == "__main__":
     register_user(EMAIL, PASSWD)
